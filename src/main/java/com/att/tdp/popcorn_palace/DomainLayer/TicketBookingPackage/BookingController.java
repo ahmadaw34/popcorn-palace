@@ -5,16 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BookingController {
     private Map<Integer, List<Ticket>> tickets;
-    private static BookingController instance;
+    // private static BookingController instance;
 
-    public static BookingController getInstance() {
-        if (instance == null) {
-            instance = new BookingController();
-        }
-        return instance;
-    }
+    // public static BookingController getInstance() {
+    //     if (instance == null) {
+    //         instance = new BookingController();
+    //     }
+    //     return instance;
+    // }
 
     private BookingController() {
         this.tickets = new HashMap<>();

@@ -5,18 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class MovieController {
     private Map<String, Movie> movies; // <title,Movie>
-    private static MovieController instance;
+    // private static MovieController instance;
 
-    public static MovieController getInstance() {
-        if (instance == null) {
-            instance = new MovieController();
-        }
-        return instance;
-    }
+    // public static MovieController getInstance() {
+    //     if (instance == null) {
+    //         instance = new MovieController();
+    //     }
+    //     return instance;
+    // }
 
     private MovieController() {
         this.movies = new HashMap<>();

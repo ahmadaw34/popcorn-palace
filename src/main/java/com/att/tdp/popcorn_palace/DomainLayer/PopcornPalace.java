@@ -2,28 +2,36 @@ package com.att.tdp.popcorn_palace.DomainLayer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.time.Duration;
 
 import com.att.tdp.popcorn_palace.DomainLayer.MoviePackage.MovieController;
 import com.att.tdp.popcorn_palace.DomainLayer.ShowTimePackage.ShowTimeController;
-// import com.att.tdp.popcorn_palace.DomainLayer.TicketBookingPackage.BookingController;
+import com.att.tdp.popcorn_palace.DomainLayer.TicketBookingPackage.BookingController;
 
+@Component
 public class PopcornPalace {
+    @Autowired
     private MovieController movieController;
+    @Autowired
     private ShowTimeController showTimeController;
-    // private BookingController bookingController;
-    private static PopcornPalace instance;
+    @Autowired
+    private BookingController bookingController;
+    // private static PopcornPalace instance;
 
-    public static PopcornPalace getInstance() {
-        if (instance == null) {
-            instance = new PopcornPalace();
-        }
-        return instance;
-    }
+    // public static PopcornPalace getInstance() {
+    //     if (instance == null) {
+    //         instance = new PopcornPalace();
+    //     }
+    //     return instance;
+    // }
 
     private PopcornPalace() {
-        movieController = MovieController.getInstance();
-        showTimeController = ShowTimeController.getInstance();
+        // movieController = MovieController.getInstance();
+        // showTimeController = ShowTimeController.getInstance();
         // bookingController = BookingController.getInstance();
     }
 
@@ -93,7 +101,7 @@ public class PopcornPalace {
             throw new Exception("end time is before start time");
         }
         Duration duration = Duration.between(start_time, end_time);
-        int minutes = (int) duration.toMinutes() % 60;
+        int minutes = (int) duration.toMinutes();
         int actualDuration = movieController.getMovieDuration(movie);
         if (actualDuration != minutes) {
             throw new Exception("showtime duration is not equal to movie duration");
@@ -122,6 +130,13 @@ public class PopcornPalace {
         return showTimeController.deleteShowTime(id);
     }
 
+    public String fetchShowtineByID(int id) throws Exception{
+        if (id < 0) {
+            throw new Exception("invalid id(less than 0)");
+        }
+        return showTimeController.fetchShowtineByID(id);
+    }
+
     // BookingTickets
     public String bookTicket(int customerID, int showTimeID, int seatNumber) throws Exception {
         if (customerID < 0) {
@@ -133,6 +148,6 @@ public class PopcornPalace {
         if (seatNumber < 0) {
             throw new Exception("invalid seat number (less than 0)");
         }
-        return bookTicket(customerID, showTimeID, seatNumber);
+        return bookingController.bookTicket(customerID, showTimeID, seatNumber);
     }
 }

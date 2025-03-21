@@ -1,21 +1,30 @@
 package com.att.tdp.popcorn_palace.DomainLayer.ShowTimePackage;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+@Component
 public class ShowTimeController {
     private Map<Integer, ShowTime> showTimes;
-    private static ShowTimeController instance;
+    // private static ShowTimeController instance;
 
-    public static ShowTimeController getInstance() {
-        if (instance == null) {
-            instance = new ShowTimeController();
-        }
-        return instance;
-    }
+    // public static ShowTimeController getInstance() {
+    //     if (instance == null) {
+    //         instance = new ShowTimeController();
+    //     }
+    //     return instance;
+    // }
 
     private ShowTimeController() {
         this.showTimes = new HashMap<>();
@@ -65,6 +74,14 @@ public class ShowTimeController {
         }
         showTimes.remove(id);
         return "showtime deleted successfully";
+    }
+
+    public String fetchShowtineByID(int id) throws Exception{
+        if (!showTimes.containsKey(id)) {
+            throw new Exception("showtime with this id is not exist");
+        }
+        ShowTime showTime=showTimes.get(id);
+        return showTime.toString();
     }
 
     public boolean isShowTimeExits(int id){
