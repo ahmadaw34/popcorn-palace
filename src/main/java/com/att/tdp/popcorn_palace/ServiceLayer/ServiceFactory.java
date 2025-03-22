@@ -16,15 +16,19 @@ public class ServiceFactory {
     // private static SreviceFactory instance;
 
     // public static SreviceFactory getInstance() {
-    //     if (instance == null) {
-    //         instance = new SreviceFactory();
-    //     }
-    //     return instance;
+    // if (instance == null) {
+    // instance = new SreviceFactory();
+    // }
+    // return instance;
     // }
 
     // private SreviceFactory() {
-    //     popcornPalace = PopcornPalace.getInstance();
+    // popcornPalace = PopcornPalace.getInstance();
     // }
+
+    public PopcornPalace getPopcornPalace() {
+        return popcornPalace;
+    }
 
     // movie service
     public Response addMovie(String title, String genre, int duration, double rating, int release_year) {
@@ -34,7 +38,7 @@ public class ServiceFactory {
             return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
-            return new Response(e.getMessage(),true);
+            return new Response(e.getMessage(), true);
         }
     }
 
@@ -72,55 +76,61 @@ public class ServiceFactory {
     }
 
     // showtime service
-    public void addShowTime(int id, String movie, String theater, int startDay,int startMonth,int startYear,int startHour,int startMinute,int endDay,int endMonth,int endYear,int endHour,int endMinute,
+    public Response addShowTime(int id, String movie, String theater, LocalDateTime start_time, LocalDateTime end_time,
             double price) {
         try {
-            LocalDateTime start_time=LocalDateTime.of(startYear,startMonth,startDay,startHour,startMinute);
-            LocalDateTime end_time=LocalDateTime.of(endYear,endMonth,endDay,endHour,endMinute);
             String result = popcornPalace.addShowTime(id, movie, theater, start_time, end_time, price);
             LOGGER.info(result);
+            return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            return new Response(e.getMessage(), true);
         }
     }
 
-    public void updateShowtimeDetails(int id, String movie, String theater, int startDay,int startMonth,int startYear,int startHour,int startMinute,int endDay,int endMonth,int endYear,int endHour,int endMinute,
-    double price) {
+    public Response updateShowtimeDetails(int id, String movie, String theater, LocalDateTime start_time,
+            LocalDateTime end_time, double price) {
         try {
-            LocalDateTime start_time=LocalDateTime.of(startYear,startMonth,startDay,startHour,startMinute);
-            LocalDateTime end_time=LocalDateTime.of(endYear,endMonth,endDay,endHour,endMinute);
-            String result=popcornPalace.updateShowtimeDetails(id, movie, theater, start_time, end_time, price);
+            String result = popcornPalace.updateShowtimeDetails(id, movie, theater, start_time, end_time, price);
             LOGGER.info(result);
+            return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            return new Response(e.getMessage(), true);
         }
     }
 
-    public void deleteShowTime(int id){
+    public Response deleteShowTime(int id) {
         try {
-            String result=popcornPalace.deleteShowTime(id);
+            String result = popcornPalace.deleteShowTime(id);
             LOGGER.info(result);
+            return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            return new Response(e.getMessage(), true);
         }
     }
 
-    public void fetchShowtineByID(int id) {
+    public Response fetchShowtineByID(int id) {
         try {
-            String result=popcornPalace.fetchShowtineByID(id);
+            String result = popcornPalace.fetchShowtineByID(id);
             LOGGER.info(result);
+            return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            return new Response(e.getMessage(), true);
         }
     }
 
     // booking tickets service
-    public void bookTicket(int customerID, int showTimeID, int seatNumber){
+    public Response bookTicket(int customerID, int showTimeID, int seatNumber) {
         try {
-            String result=popcornPalace.bookTicket(customerID, showTimeID, seatNumber);
+            String result = popcornPalace.bookTicket(customerID, showTimeID, seatNumber);
             LOGGER.info(result);
+            return new Response(result, false);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            return new Response(e.getMessage(), true);
         }
     }
 

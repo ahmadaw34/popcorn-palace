@@ -1,10 +1,25 @@
-package com.att.tdp.popcorn_palace.DTO;
+package com.att.tdp.popcorn_palace.DataAccessLayer.Entity;
 
-public class MovieDTO {
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="Movies")
+public class MovieEntity implements java.io.Serializable{
+    
+    @Id
+    @Column(name="title")
     private String title;
+
+    @Column(name="genre")
     private String genre;
+
+    @Column(name="duration")
     private int duration;
+
+    @Column(name="rating")
     private double rating;
+
+    @Column(name="releaseYear")
     private int releaseYear;
 
     public String getTitle() {

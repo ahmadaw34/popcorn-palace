@@ -36,7 +36,7 @@ public class BookingController {
             tickets.put(customerID, new ArrayList<>());
         }
         List<Ticket> customerTickets = tickets.get(customerID);
-        customerTickets.add(new Ticket(customerID, showTimeID, seatNumber));
+        customerTickets.add(new Ticket(showTimeID, seatNumber));
         return "ticket booked successfully";
     }
 }

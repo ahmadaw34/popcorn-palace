@@ -66,7 +66,10 @@ public class MovieController {
         }
     }
 
-    public int getMovieDuration(String title){
+    public int getMovieDuration(String title) throws Exception{
+        if (!movies.containsKey(title)) {
+            throw new Exception("movie with this title is not exists");
+        }
         return movies.get(title).getDuration();
     }
 

@@ -1,5 +1,7 @@
 package com.att.tdp.popcorn_palace;
 
+import java.time.LocalDateTime;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.att.tdp.popcorn_palace.DTO.MovieDTO;
+import com.att.tdp.popcorn_palace.DTO.ShowTimeDTO;
 import com.att.tdp.popcorn_palace.ServiceLayer.ServiceFactory;
 
 @SpringBootApplication
@@ -46,7 +49,7 @@ public class PopcornPalaceApplication implements CommandLineRunner {
         MovieDTO movieRequest = new MovieDTO();
         movieRequest.setTitle("The Matrix");
         movieRequest.setGenre("Sci-Fi");
-        movieRequest.setDuration(136);
+        movieRequest.setDuration(50);
         movieRequest.setRating(4);
         movieRequest.setReleaseYear(1999);
 
@@ -62,47 +65,68 @@ public class PopcornPalaceApplication implements CommandLineRunner {
             System.out.println("Response from POST: " + e.getMessage());
         }
 
-        MovieDTO movieRequest2 = new MovieDTO();
-        movieRequest2.setTitle("The Matrix");
-        movieRequest2.setGenre("Sci-Fiiiiiiiiiiiiiiiiiiiiiiiiii");
-        movieRequest2.setDuration(136);
-        movieRequest2.setRating(4);
-        movieRequest2.setReleaseYear(1999);
+        String showtimeurl = "http://localhost:8080/api/showtime";
+        ShowTimeDTO showTimeRequest = new ShowTimeDTO();
+        showTimeRequest.setId(0);
+        showTimeRequest.setMovie("The Matrix");
+        showTimeRequest.setTheater("theater");
+        showTimeRequest.setStart_time(LocalDateTime.of(2025, 5, 1, 17, 30));
+        showTimeRequest.setEnd_time(LocalDateTime.of(2025, 5, 1, 17, 50));
+        showTimeRequest.setPrice(100);
 
-        HttpEntity<MovieDTO> entity2 = new HttpEntity<>(movieRequest2, headers);
+        HttpEntity<ShowTimeDTO> showtimeentity = new HttpEntity<>(showTimeRequest, headers);
 
         try {
-            ResponseEntity<String> response2 = restTemplate.exchange(url, HttpMethod.PUT, entity2, String.class,
-                    "The Matrix");
+            ResponseEntity<String> response = restTemplate.exchange(showtimeurl, HttpMethod.POST, showtimeentity, String.class);
 
-            System.out.println("Response from PUT: " + response2);
+            System.out.println("Response from POST: " + response);
         } catch (Exception e) {
-            System.out.println("Response from PUT: " + e.getMessage());
-
+            System.out.println("Response from POST: " + e.getMessage());
         }
 
-        HttpEntity<String> entity3 = new HttpEntity<>(headers);
-        // String url2 = "http://localhost:8080/api/movies/{title}";
+        // MovieDTO movieRequest2 = new MovieDTO();
+        // movieRequest2.setTitle("The Matrix");
+        // movieRequest2.setGenre("Sci-Fiiiiiiiiiiiiiiiiiiiiiiiiii");
+        // movieRequest2.setDuration(136);
+        // movieRequest2.setRating(4);
+        // movieRequest2.setReleaseYear(1999);
+
+        // HttpEntity<MovieDTO> entity2 = new HttpEntity<>(movieRequest2, headers);
 
         // try {
-        //     ResponseEntity<String> response3 = restTemplate.exchange(url2, HttpMethod.DELETE, entity3, String.class,
-        //             "The Matrix");
+        // ResponseEntity<String> response2 = restTemplate.exchange(url, HttpMethod.PUT,
+        // entity2, String.class,
+        // "The Matrix");
 
-        //     System.out.println("Response from DELETE: " + response3);
+        // System.out.println("Response from PUT: " + response2);
         // } catch (Exception e) {
-        //     System.out.println("Response from DELETE: " + e.getMessage());
+        // System.out.println("Response from PUT: " + e.getMessage());
 
         // }
 
-        try {
-            ResponseEntity<String> response4 = restTemplate.exchange(url, HttpMethod.GET, entity3, String.class);
+        // HttpEntity<String> entity3 = new HttpEntity<>(headers);
+        // String url2 = "http://localhost:8080/api/movies/{title}";
 
-            System.out.println("Response from GET: " + response4);
-        } catch (Exception e) {
-            System.out.println("Response from GET: " + e.getMessage());
+        // try {
+        // ResponseEntity<String> response3 = restTemplate.exchange(url2,
+        // HttpMethod.DELETE, entity3, String.class,
+        // "The Matrix");
 
-        }
+        // System.out.println("Response from DELETE: " + response3);
+        // } catch (Exception e) {
+        // System.out.println("Response from DELETE: " + e.getMessage());
 
+        // }
+
+        // try {
+        // ResponseEntity<String> response4 = restTemplate.exchange(url, HttpMethod.GET,
+        // entity3, String.class);
+
+        // System.out.println("Response from GET: " + response4);
+        // } catch (Exception e) {
+        // System.out.println("Response from GET: " + e.getMessage());
+
+        // }
 
     }
 

@@ -1,13 +1,15 @@
-package com.att.tdp.popcorn_palace.DomainLayer.TicketBookingPackage;
+package com.att.tdp.popcorn_palace.DataAccessLayer.Entity;
 
-public class Ticket {
+import jakarta.persistence.*;
+
+@Embeddable
+public class TicketInfo implements java.io.Serializable {
+
+    @JoinColumn(name="showTimeID",referencedColumnName = "id")
     private int showTimeID;
+    
+    @Column(name="seatNumber")
     private int seatNumber;
-
-    public Ticket(int showTimeID, int seatNumber) {
-        this.showTimeID = showTimeID;
-        this.seatNumber = seatNumber;
-    }
 
     public int getShowTimeID() {
         return showTimeID;
@@ -24,5 +26,4 @@ public class Ticket {
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
-
 }

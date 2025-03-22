@@ -1,12 +1,16 @@
-package com.att.tdp.popcorn_palace.DomainLayer.TicketBookingPackage;
+package com.att.tdp.popcorn_palace.DTO;
 
-public class Ticket {
+public class TicketDTO {
+    private int customerID;
     private int showTimeID;
     private int seatNumber;
 
-    public Ticket(int showTimeID, int seatNumber) {
-        this.showTimeID = showTimeID;
-        this.seatNumber = seatNumber;
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public int getShowTimeID() {
@@ -24,5 +28,4 @@ public class Ticket {
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
-
 }
