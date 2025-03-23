@@ -65,6 +65,7 @@ public class ShowtimeTest {
 				String.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(dataController.getShowTimeRepository().findAll().size(),1);
 	}
 
     @Test
@@ -364,6 +365,7 @@ public class ShowtimeTest {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(response.getBody(), "showtime's details updated successfully");
+		assertEquals(dataController.getShowTimeRepository().findById(showTimeId).get().getTheater(), "theaterrrr");
 	}
 
     @Test
@@ -739,6 +741,7 @@ public class ShowtimeTest {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(response.getBody(), "showtime deleted successfully");
+		assertEquals(dataController.getShowTimeRepository().findAll().size(), 0);
 	}
 
     @Test

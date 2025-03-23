@@ -16,7 +16,8 @@ public class ShowTime {
     private LocalDateTime end_time;
     private double price;
 
-    public ShowTime(int id, String movie, String theater, LocalDateTime start_time, LocalDateTime end_time, double price) {
+    public ShowTime(int id, String movie, String theater, LocalDateTime start_time, LocalDateTime end_time,
+            double price) {
         this.id = id;
         this.movie = movie;
         this.theater = theater;
@@ -73,13 +74,13 @@ public class ShowTime {
         this.price = price;
     }
 
-    public String toString(){
+    public String toString() {
         ObjectMapper mapper = new ObjectMapper();
-        
+
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter));
-        
+
         mapper.registerModule(javaTimeModule);
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         try {

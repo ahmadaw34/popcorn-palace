@@ -15,7 +15,6 @@ import com.att.tdp.popcorn_palace.DTO.ShowTimeDTO;
 import com.att.tdp.popcorn_palace.ServiceLayer.Response;
 import com.att.tdp.popcorn_palace.ServiceLayer.ServiceFactory;
 
-
 @RestController
 @RequestMapping("/api/showtime")
 public class ShowTimeRequests {
@@ -37,6 +36,7 @@ public class ShowTimeRequests {
         }
     }
 
+    // ShowTimeDTO contains showtime id so there is no need to add showtime id as PathVariable in PUT Request
     @PutMapping
     public ResponseEntity<String> updateShowtimeDetails(@RequestBody ShowTimeDTO showtimeRequest) {
         Response response = serviceFactory.updateShowtimeDetails(showtimeRequest.getId(), showtimeRequest.getMovie(),
@@ -52,7 +52,7 @@ public class ShowTimeRequests {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteShowTime(@PathVariable("id") int id){
+    public ResponseEntity<String> deleteShowTime(@PathVariable("id") int id) {
         Response response = serviceFactory.deleteShowTime(id);
         if (response.isError()) {
             return ResponseEntity.badRequest().body(response.getMessage());
@@ -62,7 +62,7 @@ public class ShowTimeRequests {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> fetchShowtineByID(@PathVariable("id") int id){
+    public ResponseEntity<String> fetchShowtineByID(@PathVariable("id") int id) {
         Response response = serviceFactory.fetchShowtineByID(id);
         if (response.isError()) {
             return ResponseEntity.badRequest().body(response.getMessage());

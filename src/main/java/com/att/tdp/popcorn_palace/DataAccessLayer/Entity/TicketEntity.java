@@ -5,20 +5,22 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name="Tickets")
+@Table(name = "Tickets")
 public class TicketEntity implements java.io.Serializable {
 
     @Id
-    @Column(name="customerID")
+    @Column(name = "customerID")
     private int customerID;
 
-    // @Column(name="customerTickets")
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @ElementCollection
-    @CollectionTable(name = "ticket_details", joinColumns = @JoinColumn(name = "customer_id"))
-    private List<TicketInfo> customerTickets; 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "ticket_details", joinColumns = @JoinColumn(name = "customerID"))
+    private List<TicketInfo> customerTickets;
 
     public List<TicketInfo> getCustomerTickets() {
+        if (customerTickets == null) {
+            customerTickets = new ArrayList<>();
+        }
+        System.err.println(customerTickets.size());
         return customerTickets;
     }
 
@@ -34,8 +36,11 @@ public class TicketEntity implements java.io.Serializable {
         this.customerID = customerID;
     }
 
-    public void addTicket(TicketInfo ticketInfo){
+    public void addTicket(TicketInfo ticketInfo) {
+        if (customerTickets == null) {
+            customerTickets = new ArrayList<>();
+        }
         customerTickets.add(ticketInfo);
     }
-    
+
 }

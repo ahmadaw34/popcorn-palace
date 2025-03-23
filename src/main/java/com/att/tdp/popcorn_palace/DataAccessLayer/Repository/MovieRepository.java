@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.att.tdp.popcorn_palace.DataAccessLayer.Entity.MovieEntity;
 
 @Repository
-public interface  MovieRepository extends JpaRepository<MovieEntity,String>{
+public interface MovieRepository extends JpaRepository<MovieEntity,String>{
     
 }

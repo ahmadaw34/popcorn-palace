@@ -36,9 +36,9 @@ public class MovieRequests {
         }
     }
 
+    // MovieDTO contains movie title so there is no need to add the movie title as PathVariable in PUT Request
     @PutMapping
     public ResponseEntity<String> updateMovieDetails(@RequestBody MovieDTO movie) {
-
         Response response = serviceFactory.updateMovieDetails(movie.getTitle(), movie.getGenre(), movie.getDuration(),
                 movie.getRating(), movie.getReleaseYear());
         if (response.isError()) {

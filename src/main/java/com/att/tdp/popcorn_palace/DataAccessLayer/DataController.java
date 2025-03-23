@@ -32,6 +32,18 @@ public class DataController {
     @Autowired
     private TicketsRepository ticketsRepository;
 
+    public MovieRepository getMovieRepository() {
+        return movieRepository;
+    }
+
+    public ShowTimeRepository getShowTimeRepository() {
+        return showTimeRepository;
+    }
+
+    public TicketsRepository getTicketsRepository() {
+        return ticketsRepository;
+    }
+
     @Transactional
     public void deleteData() {
         ticketsRepository.deleteAll();
@@ -162,6 +174,14 @@ public class DataController {
             ticketEntity.addTicket(ticketInfo);
             ticketsRepository.save(ticketEntity);
         }
-        else{}
+        else{
+            TicketEntity ticketEntity=ticketsRepository.findById(customerID).get();
+            TicketInfo ticketInfo=new TicketInfo();
+            ticketInfo.setShowTimeID(referencedShowtime);
+            ticketInfo.setSeatNumber(seatNumber);
+            ticketEntity.addTicket(ticketInfo);
+            ticketsRepository.save(ticketEntity);
+        }
+        LOGGER.info("ticket added to database");
     }
 }

@@ -3,23 +3,23 @@ package com.att.tdp.popcorn_palace.DataAccessLayer.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="Movies")
-public class MovieEntity implements java.io.Serializable{
-    
+@Table(name = "Movies")
+public class MovieEntity implements java.io.Serializable {
+
     @Id
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name="genre")
+    @Column(name = "genre")
     private String genre;
 
-    @Column(name="duration")
+    @Column(name = "duration")
     private int duration;
 
-    @Column(name="rating")
+    @Column(name = "rating")
     private double rating;
 
-    @Column(name="releaseYear")
+    @Column(name = "releaseYear")
     private int releaseYear;
 
     public String getTitle() {

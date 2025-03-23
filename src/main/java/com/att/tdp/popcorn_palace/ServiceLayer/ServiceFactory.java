@@ -17,17 +17,6 @@ public class ServiceFactory {
     @Autowired
     private DataController dataController;
 
-    // public static SreviceFactory getInstance() {
-    // if (instance == null) {
-    // instance = new SreviceFactory();
-    // }
-    // return instance;
-    // }
-
-    // private SreviceFactory() {
-    // popcornPalace = PopcornPalace.getInstance();
-    // }
-
     // movie service
     public Response addMovie(String title, String genre, int duration, double rating, int release_year) {
         try {
@@ -108,6 +97,7 @@ public class ServiceFactory {
             LocalDateTime end_time, double price) {
         try {
             String result = popcornPalace.updateShowtimeDetails(id, movie, theater, start_time, end_time, price);
+            dataController.updateShowtimeDetails(id, movie, theater, start_time, end_time, price);
             LOGGER.info(result);
             return new Response(result, false);
         } catch (Exception e) {
@@ -119,6 +109,7 @@ public class ServiceFactory {
     public Response deleteShowTime(int id) {
         try {
             String result = popcornPalace.deleteShowTime(id);
+            dataController.deleteShowTime(id);
             LOGGER.info(result);
             return new Response(result, false);
         } catch (Exception e) {
@@ -142,6 +133,7 @@ public class ServiceFactory {
     public Response bookTicket(int customerID, int showTimeID, int seatNumber) {
         try {
             String result = popcornPalace.bookTicket(customerID, showTimeID, seatNumber);
+            dataController.bookTicket(customerID, showTimeID, seatNumber);
             LOGGER.info(result);
             return new Response(result, false);
         } catch (Exception e) {

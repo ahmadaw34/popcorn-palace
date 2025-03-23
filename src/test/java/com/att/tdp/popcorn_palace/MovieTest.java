@@ -63,12 +63,13 @@ class MovieTest {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(response.getBody(), "movie added successfully");
+		assertEquals(dataController.getMovieRepository().findById("movie").get().getTitle(), "movie");
 	}
 
 	@Test
 	void givenNullTitle_whenAddMovie_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle(null); 
+		movieRequest.setTitle(null);
 		movieRequest.setGenre("Sci-Fi");
 		movieRequest.setDuration(120);
 		movieRequest.setRating(5);
@@ -96,7 +97,7 @@ class MovieTest {
 	@Test
 	void givenNullGenre_whenAddMovie_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre(null);
 		movieRequest.setDuration(120);
 		movieRequest.setRating(5);
@@ -124,7 +125,7 @@ class MovieTest {
 	@Test
 	void givenInvalidDuration_whenAddMovie_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("Sci-Fi");
 		movieRequest.setDuration(-120);
 		movieRequest.setRating(5);
@@ -152,7 +153,7 @@ class MovieTest {
 	@Test
 	void givenInvalidRating_whenAddMovie_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("Sci-Fi");
 		movieRequest.setDuration(120);
 		movieRequest.setRating(10);
@@ -180,7 +181,7 @@ class MovieTest {
 	@Test
 	void givenInvalidReleaseYear_whenAddMovie_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("Sci-Fi");
 		movieRequest.setDuration(120);
 		movieRequest.setRating(5);
@@ -209,9 +210,9 @@ class MovieTest {
 	@Test
 	void givenExistedMovie_whenAddMovie_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("Sci-Fi");
 		movieRequest.setDuration(120);
 		movieRequest.setRating(5);
@@ -241,7 +242,7 @@ class MovieTest {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
 
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -260,14 +261,15 @@ class MovieTest {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(response.getBody(), "movie's details updated successfully");
+		assertEquals(dataController.getMovieRepository().findById("movie").get().getGenre(), "updated Sci-Fi");
 	}
 
 	@Test
 	void givenNullTitle_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle(null); 
+		movieRequest.setTitle(null);
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -295,9 +297,9 @@ class MovieTest {
 	@Test
 	void givenNullGenre_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre(null);
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -325,9 +327,9 @@ class MovieTest {
 	@Test
 	void givenInvalidDuration_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(-200);
 		movieRequest.setRating(5);
@@ -355,9 +357,9 @@ class MovieTest {
 	@Test
 	void givenInvalidRating_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(10);
@@ -385,9 +387,9 @@ class MovieTest {
 	@Test
 	void givenInvalidReleaseYear_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		
+
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -416,10 +418,11 @@ class MovieTest {
 	@Test
 	void givenMovieReferencedToShowTime_whenUpdateMovieDetails_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		serviceFactory.addShowTime("movie", "theater",LocalDateTime.of(2025, 5, 1, 17, 0),LocalDateTime.of(2025, 5, 1, 19, 0),50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
 
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -446,7 +449,7 @@ class MovieTest {
 	@Test
 	void givenNotExistMovie_whenUpdateMovieDetails_returnBadRequest() {
 		MovieDTO movieRequest = new MovieDTO();
-		movieRequest.setTitle("movie"); 
+		movieRequest.setTitle("movie");
 		movieRequest.setGenre("updated Sci-Fi");
 		movieRequest.setDuration(200);
 		movieRequest.setRating(5);
@@ -489,12 +492,14 @@ class MovieTest {
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(response.getBody(), "movie deleted successfully");
+		assertEquals(dataController.getMovieRepository().findAll().size(),0);
 	}
 
 	@Test
 	void givenMovieReferencedToShowTime_whenDeleteMovie_returnBadRequest() {
 		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-		serviceFactory.addShowTime("movie", "theater",LocalDateTime.of(2025, 5, 1, 17, 0),LocalDateTime.of(2025, 5, 1, 19, 0),50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();

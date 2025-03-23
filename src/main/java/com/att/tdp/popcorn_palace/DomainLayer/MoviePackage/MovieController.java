@@ -12,20 +12,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class MovieController {
     private Map<String, Movie> movies; // <title,Movie>
-    // private static MovieController instance;
-
-    // public static MovieController getInstance() {
-    //     if (instance == null) {
-    //         instance = new MovieController();
-    //     }
-    //     return instance;
-    // }
 
     private MovieController() {
         this.movies = new HashMap<>();
     }
 
-    public void cleanup(){
+    public void cleanup() {
         this.movies = new HashMap<>();
     }
 
@@ -70,7 +62,7 @@ public class MovieController {
         }
     }
 
-    public int getMovieDuration(String title) throws Exception{
+    public int getMovieDuration(String title) throws Exception {
         if (!movies.containsKey(title)) {
             throw new Exception("movie with this title is not exist");
         }

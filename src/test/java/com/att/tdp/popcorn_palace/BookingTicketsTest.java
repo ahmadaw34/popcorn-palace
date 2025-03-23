@@ -1,4 +1,5 @@
 package com.att.tdp.popcorn_palace;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -26,7 +27,7 @@ import com.att.tdp.popcorn_palace.ServiceLayer.ServiceFactory;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BookingTicketsTest {
-    @Autowired
+	@Autowired
 	DataController dataController;
 	@Autowired
 	ServiceFactory serviceFactory;
@@ -39,19 +40,20 @@ public class BookingTicketsTest {
 		dataController.deleteData();
 	}
 
-    @Test
+	@Test
 	void givenValidInput_BookTicket_returnOK() {
-        serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-        Response serviceResponse=serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 17, 0), LocalDateTime.of(2025, 5, 1, 19, 0), 50);
-        serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 20, 0), LocalDateTime.of(2025, 5, 1, 22, 0), 50);
-        String showtimeId=serviceResponse.getMessage().split(" ")[1];
-        int showTimeId=Integer.parseInt(showtimeId);
+		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
+		Response serviceResponse = serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 20, 0),
+				LocalDateTime.of(2025, 5, 1, 22, 0), 50);
+		String showtimeId = serviceResponse.getMessage().split(" ")[1];
+		int showTimeId = Integer.parseInt(showtimeId);
 
-		TicketDTO ticketDTO=new TicketDTO();
-        ticketDTO.setCustomerID(123456789);
-        ticketDTO.setShowTimeID(showTimeId);
-        ticketDTO.setSeatNumber(77);
-        
+		TicketDTO ticketDTO = new TicketDTO();
+		ticketDTO.setCustomerID(123456789);
+		ticketDTO.setShowTimeID(showTimeId);
+		ticketDTO.setSeatNumber(77);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -63,23 +65,25 @@ public class BookingTicketsTest {
 				HttpMethod.POST,
 				entity,
 				String.class);
-
+		
+		assertEquals(dataController.getTicketsRepository().findById(123456789).get().getCustomerID(),123456789);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
-    @Test
+	@Test
 	void givenInvalidCustomerId_whenBook_returnBadRequest() {
-        serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-        Response serviceResponse=serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 17, 0), LocalDateTime.of(2025, 5, 1, 19, 0), 50);
-        serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 20, 0), LocalDateTime.of(2025, 5, 1, 22, 0), 50);
-        String showtimeId=serviceResponse.getMessage().split(" ")[1];
-        int showTimeId=Integer.parseInt(showtimeId);
+		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
+		Response serviceResponse = serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 20, 0),
+				LocalDateTime.of(2025, 5, 1, 22, 0), 50);
+		String showtimeId = serviceResponse.getMessage().split(" ")[1];
+		int showTimeId = Integer.parseInt(showtimeId);
 
-		TicketDTO ticketDTO=new TicketDTO();
-        ticketDTO.setCustomerID(-123456789);
-        ticketDTO.setShowTimeID(showTimeId);
-        ticketDTO.setSeatNumber(77);
-        
+		TicketDTO ticketDTO = new TicketDTO();
+		ticketDTO.setCustomerID(-123456789);
+		ticketDTO.setShowTimeID(showTimeId);
+		ticketDTO.setSeatNumber(77);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -100,19 +104,20 @@ public class BookingTicketsTest {
 		}
 	}
 
-    @Test
+	@Test
 	void givenNotExistedShowtime_whenBook_returnBadRequest() {
-        serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-        Response serviceResponse=serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 17, 0), LocalDateTime.of(2025, 5, 1, 19, 0), 50);
-        serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 20, 0), LocalDateTime.of(2025, 5, 1, 22, 0), 50);
-        String showtimeId=serviceResponse.getMessage().split(" ")[1];
-        int showTimeId=Integer.parseInt(showtimeId);
+		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
+		Response serviceResponse = serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 20, 0),
+				LocalDateTime.of(2025, 5, 1, 22, 0), 50);
+		String showtimeId = serviceResponse.getMessage().split(" ")[1];
+		int showTimeId = Integer.parseInt(showtimeId);
 
-		TicketDTO ticketDTO=new TicketDTO();
-        ticketDTO.setCustomerID(123456789);
-        ticketDTO.setShowTimeID(showTimeId*10);
-        ticketDTO.setSeatNumber(77);
-        
+		TicketDTO ticketDTO = new TicketDTO();
+		ticketDTO.setCustomerID(123456789);
+		ticketDTO.setShowTimeID(showTimeId * 10);
+		ticketDTO.setSeatNumber(77);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -133,19 +138,20 @@ public class BookingTicketsTest {
 		}
 	}
 
-    @Test
+	@Test
 	void givenInvalidSeatNumber_whenBook_returnBadRequest() {
-        serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-        Response serviceResponse=serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 17, 0), LocalDateTime.of(2025, 5, 1, 19, 0), 50);
-        serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 20, 0), LocalDateTime.of(2025, 5, 1, 22, 0), 50);
-        String showtimeId=serviceResponse.getMessage().split(" ")[1];
-        int showTimeId=Integer.parseInt(showtimeId);
+		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
+		Response serviceResponse = serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 20, 0),
+				LocalDateTime.of(2025, 5, 1, 22, 0), 50);
+		String showtimeId = serviceResponse.getMessage().split(" ")[1];
+		int showTimeId = Integer.parseInt(showtimeId);
 
-		TicketDTO ticketDTO=new TicketDTO();
-        ticketDTO.setCustomerID(123456789);
-        ticketDTO.setShowTimeID(showTimeId);
-        ticketDTO.setSeatNumber(-77);
-        
+		TicketDTO ticketDTO = new TicketDTO();
+		ticketDTO.setCustomerID(123456789);
+		ticketDTO.setShowTimeID(showTimeId);
+		ticketDTO.setSeatNumber(-77);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -166,20 +172,21 @@ public class BookingTicketsTest {
 		}
 	}
 
-    @Test
+	@Test
 	void givenBookedSeat_whenBook_returnBadRequest() {
-        serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
-        Response serviceResponse=serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 17, 0), LocalDateTime.of(2025, 5, 1, 19, 0), 50);
-        serviceFactory.addShowTime("movie","theater", LocalDateTime.of(2025, 5, 1, 20, 0), LocalDateTime.of(2025, 5, 1, 22, 0), 50);
-        String showtimeId=serviceResponse.getMessage().split(" ")[1];
-        int showTimeId=Integer.parseInt(showtimeId);
-        serviceFactory.bookTicket(123456, showTimeId, 77);
+		serviceFactory.addMovie("movie", "Sci-Fi", 120, 5, 1999);
+		Response serviceResponse = serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 17, 0),
+				LocalDateTime.of(2025, 5, 1, 19, 0), 50);
+		serviceFactory.addShowTime("movie", "theater", LocalDateTime.of(2025, 5, 1, 20, 0),
+				LocalDateTime.of(2025, 5, 1, 22, 0), 50);
+		String showtimeId = serviceResponse.getMessage().split(" ")[1];
+		int showTimeId = Integer.parseInt(showtimeId);
+		serviceFactory.bookTicket(123456, showTimeId, 77);
 
-		TicketDTO ticketDTO=new TicketDTO();
-        ticketDTO.setCustomerID(123456789);
-        ticketDTO.setShowTimeID(showTimeId);
-        ticketDTO.setSeatNumber(77);
-        
+		TicketDTO ticketDTO = new TicketDTO();
+		ticketDTO.setCustomerID(123456789);
+		ticketDTO.setShowTimeID(showTimeId);
+		ticketDTO.setSeatNumber(77);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -199,6 +206,5 @@ public class BookingTicketsTest {
 			assertEquals("seat 77 for the showtime " + showTimeId + " already booked", e.getResponseBodyAsString());
 		}
 	}
-    
 
 }

@@ -9,21 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BookingController {
-    private Map<Integer, List<Ticket>> tickets;
-    // private static BookingController instance;
-
-    // public static BookingController getInstance() {
-    //     if (instance == null) {
-    //         instance = new BookingController();
-    //     }
-    //     return instance;
-    // }
+    private Map<Integer, List<Ticket>> tickets; // <customerID,List of <showtimeID,seatNumber>>
 
     private BookingController() {
         this.tickets = new HashMap<>();
     }
 
-    public void cleanup(){
+    public void cleanup() {
         this.tickets = new HashMap<>();
     }
 
@@ -44,19 +36,18 @@ public class BookingController {
         return "ticket booked successfully";
     }
 
-    public List<Integer> ticketForShowtime(int showtimeId){
-        List<Integer> ticketForShowtime=new ArrayList<>();
-        for(int customerId : tickets.keySet()){
-            for(Ticket ticket : tickets.get(customerId)){
-                if(ticket.getShowTimeID()==showtimeId){
+    public List<Integer> ticketForShowtime(int showtimeId) {
+        List<Integer> ticketForShowtime = new ArrayList<>();
+        for (int customerId : tickets.keySet()) {
+            for (Ticket ticket : tickets.get(customerId)) {
+                if (ticket.getShowTimeID() == showtimeId) {
                     ticketForShowtime.add(customerId);
                 }
             }
         }
-        if(ticketForShowtime.size()>0){
+        if (ticketForShowtime.size() > 0) {
             return ticketForShowtime;
-        }
-        else{
+        } else {
             return null;
         }
     }

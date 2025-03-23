@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Embeddable
 public class TicketInfo implements java.io.Serializable {
 
+    @ManyToOne
     @JoinColumn(name="showTimeID",referencedColumnName = "id")
     private ShowTimeEntity showTimeID;
     
