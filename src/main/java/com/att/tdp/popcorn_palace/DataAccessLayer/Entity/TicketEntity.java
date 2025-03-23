@@ -20,7 +20,6 @@ public class TicketEntity implements java.io.Serializable {
         if (customerTickets == null) {
             customerTickets = new ArrayList<>();
         }
-        System.err.println(customerTickets.size());
         return customerTickets;
     }
 
