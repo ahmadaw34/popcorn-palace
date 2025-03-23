@@ -254,7 +254,7 @@ class MovieTest {
 		HttpEntity<MovieDTO> entity = new HttpEntity<>(movieRequest, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				"http://localhost:" + port + "/api/movies",
+				"http://localhost:" + port + "/api/movies/update",
 				HttpMethod.PUT,
 				entity,
 				String.class);
@@ -282,7 +282,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -312,7 +312,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -342,7 +342,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -372,7 +372,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -402,7 +402,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -435,7 +435,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -462,7 +462,7 @@ class MovieTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/movies",
+					"http://localhost:" + port + "/api/movies/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -553,7 +553,7 @@ class MovieTest {
 		HttpEntity<MovieDTO> entity = new HttpEntity<>(headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				"http://localhost:" + port + "/api/movies",
+				"http://localhost:" + port + "/api/movies/all",
 				HttpMethod.GET,
 				entity,
 				String.class);

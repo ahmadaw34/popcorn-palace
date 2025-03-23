@@ -37,7 +37,7 @@ public class ShowTimeRequests {
     }
 
     // ShowTimeDTO contains showtime id so there is no need to add showtime id as PathVariable in PUT Request
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<String> updateShowtimeDetails(@RequestBody ShowTimeDTO showtimeRequest) {
         Response response = serviceFactory.updateShowtimeDetails(showtimeRequest.getId(), showtimeRequest.getMovie(),
                 showtimeRequest.getTheater(),

@@ -358,7 +358,7 @@ public class ShowtimeTest {
 		HttpEntity<ShowTimeDTO> entity = new HttpEntity<>(showTimeDTO, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				"http://localhost:" + port + "/api/showtime",
+				"http://localhost:" + port + "/api/showtime/update",
 				HttpMethod.PUT,
 				entity,
 				String.class);
@@ -391,7 +391,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -426,7 +426,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -461,7 +461,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -496,7 +496,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -531,7 +531,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -566,7 +566,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -601,7 +601,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -637,7 +637,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -672,7 +672,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
@@ -708,7 +708,7 @@ public class ShowtimeTest {
 
 		try {
 			restTemplate.exchange(
-					"http://localhost:" + port + "/api/showtime",
+					"http://localhost:" + port + "/api/showtime/update",
 					HttpMethod.PUT,
 					entity,
 					String.class);
