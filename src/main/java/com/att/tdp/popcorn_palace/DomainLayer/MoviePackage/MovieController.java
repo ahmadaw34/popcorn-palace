@@ -25,6 +25,10 @@ public class MovieController {
         this.movies = new HashMap<>();
     }
 
+    public void cleanup(){
+        this.movies = new HashMap<>();
+    }
+
     public String addMovie(String title, String genre, int duration, double rating, int release_year) throws Exception {
         if (movies.containsKey(title)) {
             throw new Exception("movie with this title already exists");
@@ -37,7 +41,7 @@ public class MovieController {
     public String updateMovieDetails(String title, String genre, int duration, double rating, int release_year)
             throws Exception {
         if (!movies.containsKey(title)) {
-            throw new Exception("movie with this title is not exists");
+            throw new Exception("movie with this title is not exist");
         }
         Movie movie = movies.get(title);
         movie.setGenre(genre);
@@ -49,7 +53,7 @@ public class MovieController {
 
     public String deleteMovie(String title) throws Exception {
         if (!movies.containsKey(title)) {
-            throw new Exception("movie with this title is not exists");
+            throw new Exception("movie with this title is not exist");
         }
         movies.remove(title);
         return "movie deleted successfully";
@@ -68,7 +72,7 @@ public class MovieController {
 
     public int getMovieDuration(String title) throws Exception{
         if (!movies.containsKey(title)) {
-            throw new Exception("movie with this title is not exists");
+            throw new Exception("movie with this title is not exist");
         }
         return movies.get(title).getDuration();
     }

@@ -1,7 +1,6 @@
 package com.att.tdp.popcorn_palace.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,7 @@ public class MovieRequests {
     private ServiceFactory serviceFactory;
 
     @PostMapping
-    public ResponseEntity<String> addMovie(@RequestBody MovieDTO movieRequest) {
+    public ResponseEntity<String> addMovie(@RequestBody MovieDTO movieRequest) throws Exception {
         Response response = serviceFactory.addMovie(
                 movieRequest.getTitle(),
                 movieRequest.getGenre(),

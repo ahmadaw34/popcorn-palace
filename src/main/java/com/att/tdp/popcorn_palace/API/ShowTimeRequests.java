@@ -25,7 +25,6 @@ public class ShowTimeRequests {
     @PostMapping
     public ResponseEntity<String> addShowTime(@RequestBody ShowTimeDTO showtimeRequest) {
         Response response = serviceFactory.addShowTime(
-                showtimeRequest.getId(),
                 showtimeRequest.getMovie(),
                 showtimeRequest.getTheater(),
                 showtimeRequest.getStart_time(),

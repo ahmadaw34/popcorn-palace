@@ -34,5 +34,8 @@ public class TicketEntity implements java.io.Serializable {
         this.customerID = customerID;
     }
 
+    public void addTicket(TicketInfo ticketInfo){
+        customerTickets.add(ticketInfo);
+    }
     
 }

@@ -6,16 +6,16 @@ import jakarta.persistence.*;
 public class TicketInfo implements java.io.Serializable {
 
     @JoinColumn(name="showTimeID",referencedColumnName = "id")
-    private int showTimeID;
+    private ShowTimeEntity showTimeID;
     
     @Column(name="seatNumber")
     private int seatNumber;
 
-    public int getShowTimeID() {
+    public ShowTimeEntity getShowTimeID() {
         return showTimeID;
     }
 
-    public void setShowTimeID(int showTimeID) {
+    public void setShowTimeID(ShowTimeEntity showTimeID) {
         this.showTimeID = showTimeID;
     }
 

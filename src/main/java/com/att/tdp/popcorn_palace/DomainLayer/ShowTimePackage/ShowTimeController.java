@@ -9,11 +9,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
 @Component
 public class ShowTimeController {
     private Map<Integer, ShowTime> showTimes;
@@ -30,10 +25,15 @@ public class ShowTimeController {
         this.showTimes = new HashMap<>();
     }
 
+    public void cleanup(){
+        this.showTimes = new HashMap<>();
+    }
+
     private static boolean hasOverlap(List<ShowTime> showtimes, ShowTime newShowtime) {
         for (ShowTime existing : showtimes) {
             if (newShowtime.getStart_time().isBefore(existing.getEnd_time()) &&
-                newShowtime.getEnd_time().isAfter(existing.getStart_time())) {
+                newShowtime.getEnd_time().isAfter(existing.getStart_time()) &&
+                newShowtime.getTheater().equals(existing.getTheater())) {
                 return true;
             }
         }
@@ -43,7 +43,7 @@ public class ShowTimeController {
     public String addShowTime(int id, String movie, String theater, LocalDateTime start_time, LocalDateTime end_time,
             double price) throws Exception {
         if (showTimes.containsKey(id)) {
-            throw new Exception("showtime with this id already exists");
+            throw new Exception("showtime with id "+id+" already exists");
         }
         List<ShowTime> showTimesList=new ArrayList<>(showTimes.values());
         ShowTime showTime = new ShowTime(id, movie, theater, start_time, end_time, price);
@@ -51,13 +51,18 @@ public class ShowTimeController {
             throw new Exception("cant add showtime: it overlaps");
         }
         showTimes.put(id, showTime);
-        return "showtime added successfully";
+        return "showtime "+id+" added successfully";
     }
 
     public String updateShowtimeDetails(int id, String movie, String theater, LocalDateTime start_time,
             LocalDateTime end_time, double price) throws Exception {
         if (!showTimes.containsKey(id)) {
-            throw new Exception("showtime with this id is not exist");
+            throw new Exception("showtime with id "+id+" is not exist");
+        }
+        List<ShowTime> showTimesList=new ArrayList<>(showTimes.values());
+        ShowTime updatedShowTime = new ShowTime(id, movie, theater, start_time, end_time, price);
+        if(hasOverlap(showTimesList, updatedShowTime)){
+            throw new Exception("cant add showtime: it overlaps");
         }
         ShowTime showTime=showTimes.get(id);
         showTime.setMovie(movie);
@@ -86,5 +91,20 @@ public class ShowTimeController {
 
     public boolean isShowTimeExits(int id){
         return showTimes.containsKey(id);
+    }
+
+    public List<Integer> showtimeForMovie(String movie){
+        List<Integer> showtimesForMovie=new ArrayList<>();
+        for(int id : showTimes.keySet()){
+            if(showTimes.get(id).getMovie().equals(movie)){
+                showtimesForMovie.add(id);
+            }
+        }
+        if(showtimesForMovie.size()!=0){
+            return showtimesForMovie;
+        }
+        else{
+            return null;
+        }
     }
 }

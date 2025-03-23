@@ -2,6 +2,7 @@ package com.att.tdp.popcorn_palace.DomainLayer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,24 @@ public class PopcornPalace {
         // bookingController = BookingController.getInstance();
     }
 
+    public void cleanup(){
+        cleanupMovie();
+        cleanupShowtime();
+        cleanupTickets();
+    }
+
+    public void cleanupShowtime(){
+        showTimeController.cleanup();
+    }
+
+    public void cleanupMovie(){
+        movieController.cleanup();
+    }
+
+    public void cleanupTickets(){
+        bookingController.cleanup();
+    }
+
     // Movie
     private void isValidMovieDetails(String title, String genre, int duration, double rating, int release_year)
             throws Exception {
@@ -63,7 +82,15 @@ public class PopcornPalace {
 
     public String updateMovieDetails(String title, String genre, int duration, double rating, int release_year)
             throws Exception {
-        isValidMovieDetails(title, genre, duration, rating, release_year);
+                isValidMovieDetails(title, genre, duration, rating, release_year);
+                List<Integer> showtimes=showTimeController.showtimeForMovie(title);
+                if(showtimes!=null){
+                    String ids="";
+                    for(int id : showtimes){
+                        ids+=id+", ";
+                    }
+                    throw new Exception("cant update movie because showtimes: "+ids+" referenced to this movie");
+                }
         return movieController.updateMovieDetails(title, genre, duration, rating, release_year);
     }
 
@@ -71,6 +98,14 @@ public class PopcornPalace {
         if (title == null || title == "") {
             throw new Exception("title is null");
         }
+        List<Integer> showtimes=showTimeController.showtimeForMovie(title);
+                if(showtimes!=null){
+                    String ids="";
+                    for(int id : showtimes){
+                        ids+=id+", ";
+                    }
+                    throw new Exception("cant delete movie because showtimes: "+ids+" referenced to this movie");
+                }
         return movieController.deleteMovie(title);
     }
 
@@ -119,7 +154,15 @@ public class PopcornPalace {
 
     public String updateShowtimeDetails(int id, String movie, String theater, LocalDateTime start_time,
             LocalDateTime end_time, double price) throws Exception {
-        isValidShowTimeDetails(id, movie, theater, start_time, end_time, price);
+                isValidShowTimeDetails(id, movie, theater, start_time, end_time, price);
+                List<Integer> ticketList=bookingController.ticketForShowtime(id);
+                if(ticketList!=null){
+                    String ids="";
+                    for(int customerId : ticketList){
+                        ids+=customerId+", ";
+                    }
+                    throw new Exception("cant update showtime because customers: "+ids+" referenced to this showtime");
+                }
         return showTimeController.updateShowtimeDetails(id, movie, theater, start_time, end_time, price);
     }
 
@@ -127,6 +170,14 @@ public class PopcornPalace {
         if (id < 0) {
             throw new Exception("invalid id(less than 0)");
         }
+        List<Integer> ticketList=bookingController.ticketForShowtime(id);
+                if(ticketList!=null){
+                    String ids="";
+                    for(int customerId : ticketList){
+                        ids+=customerId+", ";
+                    }
+                    throw new Exception("cant delete showtime because customers: "+ids+" referenced to this showtime");
+                }
         return showTimeController.deleteShowTime(id);
     }
 

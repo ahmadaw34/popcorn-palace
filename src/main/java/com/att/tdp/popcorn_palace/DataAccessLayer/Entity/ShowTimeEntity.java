@@ -14,7 +14,7 @@ public class ShowTimeEntity implements java.io.Serializable{
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="movie",referencedColumnName = "movie")
+    @JoinColumn(name="movie",referencedColumnName = "title")
     private MovieEntity movie;
 
     @Column(name="theater")
